@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Mindy"
 include(":app")
- 
+include(":data")
+include(":domain")
+include(":network")
