@@ -1,4 +1,4 @@
-package com.gyub.mindy.ui.theme
+package com.gyub.design.theme
 
 import androidx.compose.ui.graphics.Color
 
