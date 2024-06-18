@@ -24,6 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.gyub.design.theme.MindyTheme
 import com.gyub.mindy.model.state.MainUiState
 import com.gyub.mindy.ui.LoginScreen
+import com.gyub.mindy.ui.ShareQuoteScreen
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -57,26 +58,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MindyTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-
-                    LoginScreen()
+                    ShareQuoteScreen()
+//                    LoginScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MindyTheme {
-        Greeting("Android")
     }
 }

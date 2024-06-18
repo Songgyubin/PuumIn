@@ -51,7 +51,7 @@ fun MindyTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = PuumInTypography,
         content = content
     )
 }

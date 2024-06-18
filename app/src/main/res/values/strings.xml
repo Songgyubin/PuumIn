@@ -3,4 +3,7 @@
     <string name="login_id">ID/PW 로그인</string>
     <string name="login_naver">네이버 로그인</string>
     <string name="login_kakao">카카오 로그인</string>
+    <string name="base_quote_background">문구 기본 배경화면</string>
+    <string name="share">게시</string>
+    <string name="close">닫기</string>
 </resources>
