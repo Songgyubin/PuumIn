@@ -6,4 +6,10 @@
     <string name="base_quote_background">문구 기본 배경화면</string>
     <string name="share">게시</string>
     <string name="close">닫기</string>
+    <string name="back_button">뒤로</string>
+    <string name="sign_up_email">이메일 가입</string>
+    <string name="authentication_request">인증 요청</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="password_confirm">비밀번호 확인</string>
 </resources>
