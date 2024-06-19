@@ -1,4 +1,4 @@
-package com.gyub.mindy
+package com.gyub.puumin
 
 import android.app.Application
 
@@ -8,5 +8,5 @@ import android.app.Application
  * @author   Gyub
  * @created  2024/06/16
  */
-class MindyApplication : Application() {
+class PuumInApplication : Application() {
 }

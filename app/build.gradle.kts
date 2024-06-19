@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.gyub.mindy"
+    namespace = "com.gyub.puumin"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.gyub.mindy"
+        applicationId = "com.gyub.puumin"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

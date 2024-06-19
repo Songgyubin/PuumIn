@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Mindy"
+rootProject.name = "PuumIn"
 include(":app")
 include(":data")
 include(":domain")

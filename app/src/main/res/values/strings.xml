@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mindy</string>
+    <string name="app_name">PuumIn</string>
     <string name="login_id">ID/PW 로그인</string>
     <string name="login_naver">네이버 로그인</string>
     <string name="login_kakao">카카오 로그인</string>

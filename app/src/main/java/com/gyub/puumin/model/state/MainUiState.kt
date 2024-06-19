@@ -1,4 +1,4 @@
-package com.gyub.mindy.model.state
+package com.gyub.puumin.model.state
 
 /**
  * 메인 화면 UI 상태

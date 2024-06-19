@@ -1,4 +1,4 @@
-package com.gyub.mindy.ui
+package com.gyub.puumin.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box

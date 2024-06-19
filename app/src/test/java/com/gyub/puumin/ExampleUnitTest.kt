@@ -1,4 +1,4 @@
-package com.gyub.mindy
+package com.gyub.puumin
 
 import org.junit.Test
 

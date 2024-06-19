@@ -1,8 +1,8 @@
-package com.gyub.mindy
+package com.gyub.puumin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gyub.mindy.model.state.MainUiState
+import com.gyub.puumin.model.state.MainUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
