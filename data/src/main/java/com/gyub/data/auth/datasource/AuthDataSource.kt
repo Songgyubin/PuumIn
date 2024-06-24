@@ -2,7 +2,7 @@ package com.gyub.data.auth.datasource
 
 import com.gyub.network.model.UserResponse
 import com.gyub.network.model.base.BaseResponse
-import com.gyub.network.model.request.RegisterRequest
+import com.gyub.network.model.request.SignUpRequest
 import com.gyub.network.retrofit.AuthService
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class AuthDataSource
      * @return
      */
     suspend fun register(email: String, name: String, password: String): UserResponse {
-        val request = RegisterRequest(email, name, password)
+        val request = SignUpRequest(email, name, password)
 
         return authService.register(request)
     }

@@ -35,7 +35,7 @@ import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.SignUpViewModel
-import com.gyub.puumin.model.state.UiState
+import com.gyub.puumin.base.state.UiState
 
 /**
  * 이메일 인증 화면

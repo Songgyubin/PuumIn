@@ -32,7 +32,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
-import com.gyub.puumin.model.state.UiState
+import com.gyub.puumin.base.state.UiState
 import com.gyub.puumin.quote.QuoteRegistrationViewModel
 
 /**

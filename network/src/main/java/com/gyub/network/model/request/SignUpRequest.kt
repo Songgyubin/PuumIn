@@ -9,7 +9,7 @@ import androidx.annotation.Keep
  * @created  2024/06/19
  */
 @Keep
-data class RegisterRequest(
+data class SignUpRequest(
     val email: String,
     val username: String,
     val password: String,

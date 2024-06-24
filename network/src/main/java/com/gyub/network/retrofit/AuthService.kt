@@ -2,7 +2,7 @@ package com.gyub.network.retrofit
 
 import com.gyub.network.model.UserResponse
 import com.gyub.network.model.base.BaseResponse
-import com.gyub.network.model.request.RegisterRequest
+import com.gyub.network.model.request.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -16,7 +16,7 @@ interface AuthService {
 
     @POST("/auth/register")
     suspend fun register(
-        @Body registerRequest: RegisterRequest,
+        @Body signUpRequest: SignUpRequest,
     ): UserResponse
 
     @POST("/auth/send-code")

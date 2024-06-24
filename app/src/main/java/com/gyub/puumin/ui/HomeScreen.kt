@@ -23,18 +23,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.gyub.puumin.quote.model.Quote
 
 /**
- *
+ * 홈 화면
  *
  * @author   Gyub
  * @created  2024/06/18
  */
-data class Quote(
-    val id: Int,
-    val title: String,
-    val imageUrl: String
-)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -82,7 +78,6 @@ fun HomeScreen(
                                 .padding(20.dp)
                         )
                     }
-
                 }
             }
         }

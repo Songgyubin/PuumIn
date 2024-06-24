@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 /**
- * 문구 등록 요청 모델
+ * 문구 요청 모델
  *
  * @author   Gyub
  * @created  2024/06/23

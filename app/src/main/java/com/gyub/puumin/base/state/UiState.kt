@@ -1,4 +1,4 @@
-package com.gyub.puumin.model.state
+package com.gyub.puumin.base.state
 
 /**
  * Ui State

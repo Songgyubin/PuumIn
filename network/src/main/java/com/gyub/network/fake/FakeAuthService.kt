@@ -2,7 +2,7 @@ package com.gyub.network.fake
 
 import com.gyub.network.model.UserResponse
 import com.gyub.network.model.base.BaseResponse
-import com.gyub.network.model.request.RegisterRequest
+import com.gyub.network.model.request.SignUpRequest
 import com.gyub.network.retrofit.AuthService
 
 /**
@@ -13,7 +13,7 @@ import com.gyub.network.retrofit.AuthService
  * @created  2024/06/19
  */
 class FakeAuthService : AuthService {
-    override suspend fun register(registerRequest: RegisterRequest): UserResponse {
+    override suspend fun register(signUpRequest: SignUpRequest): UserResponse {
         return UserResponse(
             id = 0,
             email = "test@example.com",

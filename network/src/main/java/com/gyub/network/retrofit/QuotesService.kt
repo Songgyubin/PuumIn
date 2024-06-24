@@ -1,6 +1,5 @@
 package com.gyub.network.retrofit
 
-import com.google.gson.annotations.SerializedName
 import com.gyub.network.model.base.BaseResponse
 import com.gyub.network.model.request.QuoteRequest
 import retrofit2.http.Body

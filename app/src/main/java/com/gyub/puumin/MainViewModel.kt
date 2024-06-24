@@ -2,7 +2,7 @@ package com.gyub.puumin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gyub.puumin.model.state.UiState
+import com.gyub.puumin.base.state.UiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
