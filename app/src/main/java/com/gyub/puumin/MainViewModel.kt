@@ -2,7 +2,7 @@ package com.gyub.puumin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gyub.puumin.model.state.MainUiState
+import com.gyub.puumin.model.state.UiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,13 +17,18 @@ import kotlinx.coroutines.flow.stateIn
  */
 class MainViewModel : ViewModel() {
 
-    val uiState: StateFlow<MainUiState> = flow {
-        emit(MainUiState.Loading)
+    val uiState: StateFlow<SplashUiState> = flow {
+        emit(SplashUiState.Loading)
         delay(1000)
-        emit(MainUiState.Success)
+        emit(SplashUiState.Success)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        MainUiState.Loading
+        SplashUiState.Loading
     )
+}
+
+sealed interface SplashUiState {
+    data object Loading : SplashUiState
+    data object Success : SplashUiState
 }

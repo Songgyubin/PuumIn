@@ -1,6 +1,7 @@
 package com.gyub.data.auth.datasource
 
 import com.gyub.data.auth.fake.FakeAuthDataSource
+import com.gyub.data.auth.fake.base.FakeBaseDataSource
 import com.gyub.network.fake.FakeAuthService
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -38,12 +39,8 @@ class AuthDataSourceTest {
     @Test
     fun `이메일 인증 코드 전송 검증`() {
         runTest {
-            println(FakeAuthDataSource.baseResponse)
-            println(dataSource.emailSendCode(
-                email = "test@example.com"
-            ))
             assertEquals(
-                FakeAuthDataSource.baseResponse,
+                FakeBaseDataSource.successResponse,
                 dataSource.emailSendCode(
                     email = "test@example.com"
                 )

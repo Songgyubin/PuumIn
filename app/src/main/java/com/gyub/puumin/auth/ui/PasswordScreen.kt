@@ -30,7 +30,7 @@ import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.SignUpViewModel
-import com.gyub.puumin.auth.UiState
+import com.gyub.puumin.model.state.UiState
 
 /**
  * 비밀번호 입력 화면

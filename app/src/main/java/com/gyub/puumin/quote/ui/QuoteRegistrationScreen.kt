@@ -1,4 +1,4 @@
-package com.gyub.puumin.ui
+package com.gyub.puumin.quote.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,20 +26,61 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
+import com.gyub.puumin.model.state.UiState
+import com.gyub.puumin.quote.QuoteRegistrationViewModel
 
 /**
- *
+ * 문구 등록 화면
  *
  * @author   Gyub
  * @created  2024/06/18
  */
-@Composable
-fun ShareQuoteScreen(
-    modifier: Modifier = Modifier,
+const val QUOTE_REGISTRATION_ROUTE = "QUOTE_REGISTRATION_ROUTE"
+
+fun NavGraphBuilder.quoteRegistration(
+    navigateUp: () -> Unit,
 ) {
-    var quoteContents by remember { mutableStateOf("") }
+    composable(QUOTE_REGISTRATION_ROUTE) {
+        QuoteRegistrationRoute(
+            navigateUp = navigateUp
+        )
+    }
+}
+
+@Composable
+fun QuoteRegistrationRoute(
+    modifier: Modifier = Modifier,
+    navigateUp: () -> Unit,
+    viewModel: QuoteRegistrationViewModel = hiltViewModel(),
+) {
+    val content by viewModel.content.collectAsStateWithLifecycle()
+    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+
+    QuoteRegistrationScreen(
+        modifier = modifier,
+        content = content,
+        registerUiState = registerUiState,
+        navigateUp = navigateUp,
+        updateContent = viewModel::updateContent,
+        registerQuote = viewModel::registerQuote
+    )
+}
+
+@Composable
+fun QuoteRegistrationScreen(
+    modifier: Modifier = Modifier,
+    content: String,
+    registerUiState: UiState,
+    navigateUp: () -> Unit,
+    updateContent: (String) -> Unit,
+    registerQuote: () -> Unit,
+) {
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -60,7 +101,7 @@ fun ShareQuoteScreen(
             contentDescription = stringResource(R.string.base_quote_background)
         )
         Button(
-            onClick = { },
+            onClick = navigateUp,
             modifier = modifier
                 .align(Alignment.TopStart),
             colors = ButtonDefaults.buttonColors(
@@ -75,7 +116,7 @@ fun ShareQuoteScreen(
         }
 
         Button(
-            onClick = { },
+            onClick = registerQuote,
             modifier = modifier
                 .align(Alignment.TopEnd),
             colors = ButtonDefaults.buttonColors(
@@ -89,10 +130,9 @@ fun ShareQuoteScreen(
             )
         }
 
-
         BasicTextField(
-            value = quoteContents,
-            onValueChange = { quoteContents = it },
+            value = content,
+            onValueChange = updateContent,
             modifier = modifier
                 .align(Alignment.Center)
                 .focusRequester(focusRequester)
@@ -104,6 +144,16 @@ fun ShareQuoteScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ShareQuoteScreenPreview() {
-    ShareQuoteScreen()
+fun QuoteRegistrationScreenPreview() {
+    var content by remember { mutableStateOf("") }
+    var registerUiState: UiState by remember { mutableStateOf(UiState.Loading) }
+
+    QuoteRegistrationScreen(
+        modifier = Modifier,
+        content = content,
+        registerUiState = registerUiState,
+        navigateUp = {},
+        updateContent = { content = it },
+        registerQuote = { registerUiState = UiState.Success }
+    )
 }

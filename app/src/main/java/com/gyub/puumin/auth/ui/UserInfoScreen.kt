@@ -21,8 +21,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.component.button.BlackWhiteBasicButton
+import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.SignUpViewModel

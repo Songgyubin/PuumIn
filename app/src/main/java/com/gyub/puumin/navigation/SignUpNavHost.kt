@@ -1,4 +1,4 @@
-package com.gyub.puumin.auth.navigation
+package com.gyub.puumin.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

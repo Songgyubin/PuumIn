@@ -17,9 +17,4 @@ object FakeAuthDataSource {
         name = "testuser",
         message = "Registration Success"
     )
-
-    val baseResponse = BaseResponse(
-        code = 200,
-        message = "Send Code Success"
-    )
 }

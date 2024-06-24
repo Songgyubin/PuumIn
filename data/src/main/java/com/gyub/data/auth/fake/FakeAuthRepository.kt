@@ -1,5 +1,6 @@
 package com.gyub.data.auth.fake
 
+import com.gyub.data.auth.fake.base.FakeBaseDataSource
 import com.gyub.data.auth.model.toDomainModel
 import com.gyub.data.base.model.toDomainModel
 import com.gyub.domain.auth.model.UserModel
@@ -12,12 +13,12 @@ import com.gyub.domain.base.model.BaseModel
  * @author   Gyub
  * @created  2024/06/20
  */
-class FakeAuthRepository(private val dataSource: FakeAuthDataSource = FakeAuthDataSource) : AuthRepository {
+class FakeAuthRepository : AuthRepository {
     override suspend fun register(email: String, name: String, password: String): UserModel {
-        return dataSource.userResponse.toDomainModel()
+        return FakeAuthDataSource.userResponse.toDomainModel()
     }
 
     override suspend fun emailSendCode(email: String): BaseModel {
-        return dataSource.baseResponse.toDomainModel()
+        return FakeBaseDataSource.successResponse.toDomainModel()
     }
 }

@@ -1,6 +1,7 @@
 package com.gyub.network.di
 
 import com.gyub.network.retrofit.AuthService
+import com.gyub.network.retrofit.QuotesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,12 @@ object ApiServiceModule {
     @Singleton
     @Provides
     fun providesAuthService(retrofit: Retrofit.Builder): AuthService {
+        return retrofit.build().create()
+    }
+
+    @Singleton
+    @Provides
+    fun providesQuotesService(retrofit: Retrofit.Builder): QuotesService {
         return retrofit.build().create()
     }
 }

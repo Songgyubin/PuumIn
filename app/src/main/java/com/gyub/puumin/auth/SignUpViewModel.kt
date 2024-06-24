@@ -3,6 +3,7 @@ package com.gyub.puumin.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gyub.puumin.model.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -143,10 +144,4 @@ class SignUpViewModel
             }
         }
     }
-}
-
-sealed interface UiState {
-    data object Success : UiState
-    data object Loading : UiState
-    data object Error : UiState
 }

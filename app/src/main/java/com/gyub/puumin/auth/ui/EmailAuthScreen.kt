@@ -30,12 +30,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.gyub.common.util.ToastUtil.showToast
 import com.gyub.common.util.Validator.isValidEmail
-import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.component.button.BlackWhiteBasicButton
+import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.SignUpViewModel
-import com.gyub.puumin.auth.UiState
+import com.gyub.puumin.model.state.UiState
 
 /**
  * 이메일 인증 화면

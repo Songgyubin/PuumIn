@@ -16,9 +16,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gyub.design.theme.PuumInTheme
-import com.gyub.puumin.model.state.MainUiState
+import com.gyub.puumin.model.state.UiState
 import com.gyub.puumin.ui.LoginScreen
-import com.gyub.puumin.ui.ShareQuoteScreen
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        var uiState: MainUiState by mutableStateOf(MainUiState.Loading)
+        var uiState: SplashUiState by mutableStateOf(SplashUiState.Loading)
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -43,8 +42,8 @@ class MainActivity : ComponentActivity() {
 
         splashScreen.setKeepOnScreenCondition {
             when (uiState) {
-                MainUiState.Loading -> true
-                is MainUiState.Success -> false
+                SplashUiState.Loading -> true
+                is SplashUiState.Success -> false
             }
         }
 
@@ -52,7 +51,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             PuumInTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-//                    ShareQuoteScreen()
                     LoginScreen()
                 }
             }

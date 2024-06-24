@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.gyub.puumin.R
-import com.gyub.puumin.auth.navigation.SignUpDestination
+import com.gyub.puumin.navigation.SignUpDestination
 
 /**
  * Top App Bar

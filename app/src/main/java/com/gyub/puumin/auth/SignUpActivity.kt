@@ -11,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gyub.design.theme.PuumInTheme
-import com.gyub.puumin.auth.navigation.SignUpDestination
-import com.gyub.puumin.auth.navigation.SignUpNavHost
+import com.gyub.puumin.navigation.SignUpDestination
+import com.gyub.puumin.navigation.SignUpNavHost
 import com.gyub.puumin.auth.ui.EMAIL_AUTH_ROOT
 import com.gyub.puumin.auth.ui.PASSWORD_ROUTE
 import com.gyub.puumin.auth.ui.USER_INFO_ROUTE

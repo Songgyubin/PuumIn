@@ -1,4 +1,4 @@
-package com.gyub.puumin.auth.navigation
+package com.gyub.puumin.navigation
 
 import androidx.annotation.StringRes
 import com.gyub.puumin.R
