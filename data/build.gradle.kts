@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":common"))
 
     implementation(libs.hilt.android)
+    implementation(libs.paging.common)
     implementation(libs.androidx.datastore.preferences)
 
     kapt(libs.hilt.compiler)

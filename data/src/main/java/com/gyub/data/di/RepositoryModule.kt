@@ -1,12 +1,13 @@
 package com.gyub.data.di
 
 import com.gyub.data.auth.repository.NetworkAuthRepository
+import com.gyub.data.quotes.repository.NetworkQuotesRepository
 import com.gyub.domain.auth.repository.AuthRepository
+import com.gyub.domain.quotes.repository.QuotesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -24,4 +25,10 @@ interface RepositoryModule {
     fun bindsAuthRepository(
         networkAuthRepository: NetworkAuthRepository,
     ): AuthRepository
+
+    @Singleton
+    @Binds
+    fun bindsQuotesRepository(
+        networkQuotesRepository: NetworkQuotesRepository,
+    ): QuotesRepository
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -94,12 +95,6 @@ fun QuoteRegistrationScreen(
                 focusRequester.requestFocus()
             }
     ) {
-        Image(
-            painter = painterResource(id = com.gyub.design.R.drawable.base_quote_background),
-            modifier = modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            contentDescription = stringResource(R.string.base_quote_background)
-        )
         Button(
             onClick = navigateUp,
             modifier = modifier

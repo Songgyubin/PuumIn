@@ -1,6 +1,9 @@
 package com.gyub.domain.quotes.repository
 
+import androidx.paging.PagingData
 import com.gyub.domain.base.model.BaseModel
+import com.gyub.domain.quotes.model.QuoteModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * 문구 관련 Repository
@@ -19,4 +22,11 @@ interface QuotesRepository {
         content: String,
         isPublic: Boolean = false,
     ): BaseModel
+
+    /**
+     * 문구 가져오기
+     *
+     * @return
+     */
+    fun getQuotes(): Flow<PagingData<QuoteModel>>
 }

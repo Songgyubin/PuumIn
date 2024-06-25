@@ -22,7 +22,7 @@ android {
         applicationId = "com.gyub.puumin"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -92,8 +92,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation("com.kakao.sdk:v2-user:2.20.1")
-    implementation("com.navercorp.nid:oauth:5.9.1") // jdk 11
+    implementation(libs.v2.user)
+    implementation(libs.oauth)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.common)
+    implementation(libs.androidx.paging.compose)
 
     kapt(libs.hilt.compiler)
 

@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.hilt.android)
+    implementation(libs.paging.common)
 
     kapt(libs.hilt.compiler)
 

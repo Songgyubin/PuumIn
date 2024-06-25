@@ -1,5 +1,6 @@
 package com.gyub.data.quotes.datasource
 
+import com.gyub.network.model.response.QuoteResponse
 import com.gyub.network.model.base.BaseResponse
 import com.gyub.network.model.request.QuoteRequest
 import com.gyub.network.retrofit.QuotesService
@@ -30,4 +31,14 @@ class QuotesDataSource
 
         return quotesService.postQuotes(request)
     }
+
+    /**
+     * 문구 가져오기
+     *
+     * @return 문구 리스트
+     */
+    suspend fun getQuotes(
+        page: Int,
+        limit: Int,
+    ): List<QuoteResponse.Quote>? = quotesService.getQuotes(page, limit).data.items
 }

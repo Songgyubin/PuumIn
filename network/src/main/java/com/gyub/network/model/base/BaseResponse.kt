@@ -10,8 +10,8 @@ import androidx.annotation.Keep
  */
 @Keep
 open class BaseResponse(
-    val success: Boolean?,
-    val error: String?,
+    val success: Boolean? = false,
+    val error: String? = "",
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
