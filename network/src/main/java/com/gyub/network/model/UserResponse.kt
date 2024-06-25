@@ -13,7 +13,4 @@ import com.google.gson.annotations.SerializedName
 data class UserResponse(
     val id: Int?,
     val email: String?,
-    @SerializedName("username")
-    val name: String?,
-    val message: String?,
 )

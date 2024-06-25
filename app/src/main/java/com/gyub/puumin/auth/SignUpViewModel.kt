@@ -3,12 +3,17 @@ package com.gyub.puumin.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gyub.common.Result
+import com.gyub.common.asResult
+import com.gyub.domain.auth.usecase.PostRegisterUseCase
+import com.gyub.domain.auth.usecase.PostSendEmailCodeUseCase
+import com.gyub.domain.auth.usecase.PostVerifyEmailCodeUseCase
+import com.gyub.puumin.auth.model.EmailSendingCodeUiState
 import com.gyub.puumin.base.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,12 +26,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel
 @Inject constructor(
+    private val sendEmailCodeUseCase: PostSendEmailCodeUseCase,
+    private val verifyEmailCodeUseCase: PostVerifyEmailCodeUseCase,
+    private val registerUseCase: PostRegisterUseCase,
 ) : ViewModel() {
     private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
 
-    private val _emailUiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val emailUiState = _emailUiState.asStateFlow()
+    private val _emailSendingCodeUiState: MutableStateFlow<EmailSendingCodeUiState> = MutableStateFlow(EmailSendingCodeUiState.Idle)
+    val emailSendingCodeUiState = _emailSendingCodeUiState.asStateFlow()
 
     private val _emailVerifyUiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val emailVerifyUiState = _emailVerifyUiState.asStateFlow()
@@ -97,14 +105,18 @@ class SignUpViewModel
      */
     fun sendEmailCode() {
         viewModelScope.launch {
-            flow {
-                emit(UiState.Loading)
-                delay(200)
-                emit(UiState.Success)
-            }.collect {
-                _emailUiState.value = it
-                Log.d("TAG", "email - : ${email.value}")
-            }
+            sendEmailCodeUseCase(email.value)
+                .asResult()
+                .map {
+                    when (it) {
+                        is Result.Error -> EmailSendingCodeUiState.Error
+                        Result.Loading -> EmailSendingCodeUiState.Loading
+                        is Result.Success -> EmailSendingCodeUiState.Success
+                    }
+                }.collect {
+                    Log.d("TAG", "collect - :$it ")
+                    _emailSendingCodeUiState.value = it
+                }
         }
     }
 
@@ -113,13 +125,17 @@ class SignUpViewModel
      */
     fun verifyEmail() {
         viewModelScope.launch {
-            flow {
-                emit(UiState.Loading)
-                delay(200)
-                emit(UiState.Success)
-            }.collect {
-                _emailVerifyUiState.value = it
-            }
+            verifyEmailCodeUseCase(email.value, emailVerifyCode.value)
+                .asResult()
+                .map {
+                    when (it) {
+                        is Result.Error -> UiState.Error
+                        Result.Loading -> UiState.Loading
+                        is Result.Success -> UiState.Success
+                    }
+                }.collect {
+                    _emailVerifyUiState.value = it
+                }
         }
     }
 
@@ -128,20 +144,28 @@ class SignUpViewModel
      */
     fun resetEmailVerifyState() {
         _emailVerifyCode.value = ""
-        _emailUiState.value = UiState.Loading
+        _emailSendingCodeUiState.value = EmailSendingCodeUiState.Loading
         _emailVerifyUiState.value = UiState.Loading
     }
 
     /**
      * 회원가입
      */
-    fun registerUiState() {
+    fun register() {
         viewModelScope.launch {
-            flow {
-                emit(UiState.Loading)
-                delay(200)
-                emit(UiState.Success)
-            }
+            Log.d("TAG", " - email: ${email.value}")
+            Log.d("TAG", " - password: ${password.value}")
+            registerUseCase(email.value, password.value)
+                .asResult()
+                .map {
+                    when (it) {
+                        is Result.Error -> UiState.Error
+                        Result.Loading -> UiState.Loading
+                        is Result.Success -> UiState.Success
+                    }
+                }.collect {
+                    _registerUiState.value = it
+                }
         }
     }
 }

@@ -13,7 +13,6 @@ import com.gyub.network.model.UserResponse
 fun UserResponse.toDomainModel(): UserModel {
     return UserModel(
         id = id.orDefault(),
-        name = name.orEmpty(),
         email = email.orEmpty(),
     )
 }

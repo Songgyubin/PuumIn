@@ -1,5 +1,6 @@
 package com.gyub.data.auth.fake
 
+import com.gyub.network.model.AuthResponse
 import com.gyub.network.model.UserResponse
 import com.gyub.network.model.base.BaseResponse
 
@@ -14,7 +15,11 @@ object FakeAuthDataSource {
     val userResponse = UserResponse(
         id = 0,
         email = "test@example.com",
-        name = "testuser",
-        message = "Registration Success"
+    )
+
+    val authResponse = AuthResponse(
+        data = AuthResponse.Token(
+            token = "test_token"
+        )
     )
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -35,6 +34,7 @@ import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.SignUpViewModel
+import com.gyub.puumin.auth.model.EmailSendingCodeUiState
 import com.gyub.puumin.base.state.UiState
 
 /**
@@ -46,21 +46,25 @@ import com.gyub.puumin.base.state.UiState
 const val EMAIL_AUTH_ROOT = "EMAIL_AUTH_ROOT"
 
 fun NavGraphBuilder.emailAuthScreen(
+    viewModel: SignUpViewModel,
     onNext: () -> Unit,
 ) {
     composable(EMAIL_AUTH_ROOT) {
-        EmailAuthRoute(onNext = onNext)
+        EmailAuthRoute(
+            viewModel = viewModel,
+            onNext = onNext
+        )
     }
 }
 
 @Composable
 fun EmailAuthRoute(
     modifier: Modifier = Modifier,
-    viewModel: SignUpViewModel = hiltViewModel(),
+    viewModel: SignUpViewModel,
     onNext: () -> Unit,
 ) {
     val email by viewModel.email.collectAsStateWithLifecycle()
-    val emailUiState by viewModel.emailUiState.collectAsStateWithLifecycle()
+    val emailSendingCodeUiState by viewModel.emailSendingCodeUiState.collectAsStateWithLifecycle()
     val emailVerifyUiState by viewModel.emailVerifyUiState.collectAsStateWithLifecycle()
     val emailVerifyCode by viewModel.emailVerifyCode.collectAsStateWithLifecycle()
 
@@ -68,7 +72,7 @@ fun EmailAuthRoute(
         modifier,
         email,
         emailVerifyCode,
-        emailUiState,
+        emailSendingCodeUiState,
         emailVerifyUiState,
         viewModel::updateEmail,
         viewModel::sendEmailCode,
@@ -84,7 +88,7 @@ fun EmailAuthScreen(
     modifier: Modifier = Modifier,
     email: String,
     emailVerifyCode: String,
-    uiState: UiState,
+    emailSendingCodeUiState: EmailSendingCodeUiState,
     emailVerifyUiState: UiState,
     updateEmail: (String) -> Unit,
     sendEmailCode: () -> Unit,
@@ -105,20 +109,38 @@ fun EmailAuthScreen(
             updateEmail = updateEmail
         )
 
-        when (uiState) {
-            UiState.Error, UiState.Loading -> {
+        when (emailSendingCodeUiState) {
+            EmailSendingCodeUiState.Idle -> {
+                BlackWhiteBasicButton(
+                    modifier = modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 15.dp),
+                    onClick = {
+                        sendEmailCode()
+                        showToast(
+                            context,
+                            R.string.please_check_verification_code,
+                            isLong = true
+                        )
+                    },
+                    enabled = isValidEmail(email),
+                    text = stringResource(R.string.authentication_request)
+                )
+            }
+
+            EmailSendingCodeUiState.Error -> {
                 BlackWhiteBasicButton(
                     modifier = modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 15.dp),
                     onClick = sendEmailCode,
-                    enabled = isValidEmail(email) && uiState !is UiState.Success,
-                    text = if (uiState is UiState.Loading) stringResource(R.string.authentication_request)
+                    enabled = isValidEmail(email) && emailSendingCodeUiState !is EmailSendingCodeUiState.Success,
+                    text = if (emailSendingCodeUiState is EmailSendingCodeUiState.Loading) stringResource(R.string.authentication_request)
                     else stringResource(R.string.retry)
                 )
             }
 
-            UiState.Success -> {
+            EmailSendingCodeUiState.Loading, EmailSendingCodeUiState.Success -> {
                 Spacer(modifier = modifier.height(10.dp))
                 RoundedInputTextField(
                     modifier = modifier
@@ -219,14 +241,14 @@ private fun handleEmailVerifyUiState(
 fun EmailAuthScreenPreview() {
     var email by remember { mutableStateOf("") }
     var emailVerifyCode by remember { mutableStateOf("") }
-    var uiState by remember { mutableStateOf(UiState.Loading) }
+    var uiState by remember { mutableStateOf(EmailSendingCodeUiState.Loading) }
     var emailVerifyUiState by remember { mutableStateOf(UiState.Success) }
 
     EmailAuthScreen(
         modifier = Modifier,
         email = email,
         emailVerifyCode = emailVerifyCode,
-        uiState = uiState,
+        emailSendingCodeUiState = uiState,
         emailVerifyUiState = emailVerifyUiState,
         updateEmail = { email = it },
         sendEmailCode = { },

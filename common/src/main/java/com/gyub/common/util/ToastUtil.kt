@@ -22,7 +22,7 @@ object ToastUtil {
     fun showToast(
         context: Context,
         @StringRes message: Int,
-        isLong: Boolean = false,
+        isLong: Boolean = true,
     ) {
         Toast.makeText(context, context.getString(message), if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
     }

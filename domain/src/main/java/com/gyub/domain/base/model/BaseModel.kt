@@ -7,6 +7,6 @@ package com.gyub.domain.base.model
  * @created  2024/06/20
  */
 open class BaseModel(
-    val code: Int,
-    val message: String,
+    val code: Int = 0,
+    val message: String = "",
 )

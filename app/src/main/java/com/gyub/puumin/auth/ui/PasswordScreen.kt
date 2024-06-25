@@ -1,5 +1,7 @@
 package com.gyub.puumin.auth.ui
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,18 +20,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.gyub.common.util.ToastUtil.showToast
 import com.gyub.common.util.Validator.isValidPassword
 import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
+import com.gyub.puumin.auth.LoginActivity
 import com.gyub.puumin.auth.SignUpViewModel
 import com.gyub.puumin.base.state.UiState
 
@@ -39,20 +44,25 @@ import com.gyub.puumin.base.state.UiState
  * @created  2024/06/19
  */
 const val PASSWORD_ROUTE = "PASSWORD_ROUTE"
-fun NavGraphBuilder.passwordScreen() {
+fun NavGraphBuilder.passwordScreen(
+    viewModel: SignUpViewModel,
+) {
     composable(route = PASSWORD_ROUTE) {
-        PasswordRoute()
+        PasswordRoute(
+            viewModel = viewModel
+        )
     }
 }
 
 @Composable
 fun PasswordRoute(
     modifier: Modifier = Modifier,
-    viewModel: SignUpViewModel = hiltViewModel(),
+    viewModel: SignUpViewModel,
 ) {
     val password by viewModel.password.collectAsStateWithLifecycle()
     val passwordConfirm by viewModel.passwordConfirm.collectAsStateWithLifecycle()
     val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+
     PasswordScreen(
         modifier,
         password,
@@ -60,7 +70,7 @@ fun PasswordRoute(
         registerUiState,
         viewModel::updatePassword,
         viewModel::updatePasswordConfirm,
-        viewModel::registerUiState
+        viewModel::register
     )
 }
 
@@ -74,6 +84,8 @@ fun PasswordScreen(
     updatePasswordConfirm: (String) -> Unit,
     register: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -142,6 +154,32 @@ fun PasswordScreen(
             Text(text = stringResource(R.string.finish))
         }
     }
+
+    LaunchedEffect(key1 = registerUiState) {
+        when (registerUiState) {
+            UiState.Error -> showToast(
+                context,
+                R.string.fail_sign_up,
+                true
+            )
+
+            UiState.Loading -> {}
+            UiState.Success -> moveLogin(context)
+        }
+
+    }
+}
+
+/**
+ * 로그인 화면으로 이동
+ *
+ * @param context
+ */
+private fun moveLogin(context: Context) {
+    val intent = Intent(context, LoginActivity::class.java).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    }
+    context.startActivity(intent)
 }
 
 @Preview(showBackground = true)

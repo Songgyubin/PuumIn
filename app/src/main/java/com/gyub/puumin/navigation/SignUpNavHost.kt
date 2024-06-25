@@ -3,14 +3,14 @@ package com.gyub.puumin.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.gyub.puumin.auth.SignUpViewModel
 import com.gyub.puumin.auth.ui.EMAIL_AUTH_ROOT
 import com.gyub.puumin.auth.ui.PASSWORD_ROUTE
-import com.gyub.puumin.auth.ui.USER_INFO_ROUTE
 import com.gyub.puumin.auth.ui.emailAuthScreen
 import com.gyub.puumin.auth.ui.passwordScreen
-import com.gyub.puumin.auth.ui.userInfoScreen
 
 /**
  * 회원가입 네비게이션 그래프
@@ -21,6 +21,7 @@ import com.gyub.puumin.auth.ui.userInfoScreen
 @Composable
 fun SignUpNavHost(
     modifier: Modifier = Modifier,
+    viewModel: SignUpViewModel = hiltViewModel(),
     navController: NavHostController,
     startDestination: String = EMAIL_AUTH_ROOT,
 ) {
@@ -30,8 +31,8 @@ fun SignUpNavHost(
         modifier = modifier
             .fillMaxSize()
     ) {
-        emailAuthScreen { navController.navigate(USER_INFO_ROUTE) }
-        userInfoScreen { navController.navigate(PASSWORD_ROUTE) }
-        passwordScreen()
+        emailAuthScreen(viewModel = viewModel) { navController.navigate(PASSWORD_ROUTE) }
+//        userInfoScreen { navController.navigate(PASSWORD_ROUTE) }
+        passwordScreen(viewModel = viewModel)
     }
 }

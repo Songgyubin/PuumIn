@@ -1,5 +1,6 @@
 package com.gyub.data.auth.fake.base
 
+import com.gyub.network.model.AuthResponse
 import com.gyub.network.model.base.BaseResponse
 
 /**

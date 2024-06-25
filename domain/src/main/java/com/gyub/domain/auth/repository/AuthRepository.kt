@@ -1,5 +1,6 @@
 package com.gyub.domain.auth.repository
 
+import com.gyub.domain.auth.model.AuthModel
 import com.gyub.domain.auth.model.UserModel
 import com.gyub.domain.base.model.BaseModel
 
@@ -15,13 +16,11 @@ interface AuthRepository {
      * 회원가입
      *
      * @param email 이메일
-     * @param name 이름
      * @param password 비밀번호
      * @return 가입된 회원 정보
      */
     suspend fun register(
         email: String,
-        name: String,
         password: String,
     ): UserModel
 
@@ -32,5 +31,31 @@ interface AuthRepository {
      * @param email 코드를 전송할 이메일
      * @return
      */
-    suspend fun emailSendCode(email: String): BaseModel
+    suspend fun sendEmailCode(email: String): BaseModel
+
+    /**
+     * 인증 코드 확인
+     *
+     * @param email
+     * @param code
+     * @return
+     */
+    suspend fun verifyEmailCode(email: String, code: String): BaseModel
+
+    /**
+     * 이메일로 로그인
+     *
+     * @param email
+     * @param password
+     * @return
+     */
+    suspend fun login(email: String, password: String): AuthModel
+
+    /**
+     * 소셜 로그인
+     *
+     * @param accessToken 소셜 로그인을 통해 받아온 accessToken
+     * @return
+     */
+    suspend fun socialLogin(accessToken: String, type:String): AuthModel
 }

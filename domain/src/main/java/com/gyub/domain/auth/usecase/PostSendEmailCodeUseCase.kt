@@ -12,11 +12,11 @@ import javax.inject.Inject
  * @author   Gyub
  * @created  2024/06/20
  */
-class PostEmailSendCodeUseCase
+class PostSendEmailCodeUseCase
 @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
     operator fun invoke(email: String): Flow<BaseModel> = flow {
-        emit(authRepository.emailSendCode(email))
+        emit(authRepository.sendEmailCode(email))
     }
 }

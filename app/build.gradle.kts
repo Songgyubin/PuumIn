@@ -1,8 +1,17 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+}
+
+val properties = Properties()
+val local = "local.properties"
+if (rootProject.file(local).exists()) {
+    properties.load(FileInputStream(rootProject.file(local)))
 }
 
 android {
@@ -20,12 +29,20 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "kakao_key", properties["KAKAO_KEY"] as String)
+        resValue("string", "kakao_oauth_host", properties["KAKAO_OAUTH_HOST"] as String)
+        buildConfigField("String", "naver_oauth_client_id", properties["NAVER_OAUTH_CLIENT_ID"] as String)
+        buildConfigField("String", "naver_oauth_client_secret", properties["NAVER_OAUTH_CLIENT_SECRET"] as String)
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug {
+            isMinifyEnabled = false
         }
     }
     compileOptions {
@@ -45,6 +62,10 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -70,6 +91,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation("com.kakao.sdk:v2-user:2.20.1")
+    implementation("com.navercorp.nid:oauth:5.9.1") // jdk 11
 
     kapt(libs.hilt.compiler)
 

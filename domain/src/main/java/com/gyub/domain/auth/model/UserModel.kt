@@ -9,5 +9,4 @@ package com.gyub.domain.auth.model
 data class UserModel(
     val id: Int,
     val email: String,
-    val name: String,
 )

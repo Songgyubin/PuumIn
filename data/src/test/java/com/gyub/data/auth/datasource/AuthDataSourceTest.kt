@@ -29,7 +29,6 @@ class AuthDataSourceTest {
                 FakeAuthDataSource.userResponse,
                 dataSource.register(
                     email = "test@example.com",
-                    name = "testuser",
                     password = "password"
                 )
             )
@@ -41,7 +40,7 @@ class AuthDataSourceTest {
         runTest {
             assertEquals(
                 FakeBaseDataSource.successResponse,
-                dataSource.emailSendCode(
+                dataSource.sendEmailCode(
                     email = "test@example.com"
                 )
             )
