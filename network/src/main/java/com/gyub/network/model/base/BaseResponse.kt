@@ -10,19 +10,19 @@ import androidx.annotation.Keep
  */
 @Keep
 open class BaseResponse(
-    val code: Int?,
-    val message: String?,
+    val success: Boolean?,
+    val error: String?,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is BaseResponse) return false
 
-        return code == other.code && message == other.message
+        return success == other.success && error == other.error
     }
 
     override fun hashCode(): Int {
-        var result = code?.hashCode() ?: 0
-        result = 31 * result + (message?.hashCode() ?: 0)
+        var result = success?.hashCode() ?: 0
+        result = 31 * result + (error?.hashCode() ?: 0)
         return result
     }
 }

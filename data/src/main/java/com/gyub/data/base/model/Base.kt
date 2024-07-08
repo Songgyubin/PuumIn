@@ -13,7 +13,7 @@ import com.gyub.network.model.base.BaseResponse
 
 fun BaseResponse.toDomainModel(): BaseModel {
     return BaseModel(
-        code = code.orDefault(),
-        message = message.orEmpty()
+        success = success.orDefault(),
+        error = error.orEmpty()
     )
 }
