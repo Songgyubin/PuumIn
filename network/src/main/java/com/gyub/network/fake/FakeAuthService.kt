@@ -27,15 +27,15 @@ class FakeAuthService : AuthService {
 
     override suspend fun sendEmailCode(request: EmailCodeRequest): BaseResponse {
         return BaseResponse(
-            code = 200,
-            message = "Success"
+            success = true,
+            error = null
         )
     }
 
     override suspend fun verifyEmailCode(request: VerifyEmailCodeRequest): BaseResponse {
         return BaseResponse(
-            code = 200,
-            message = "Success"
+            success = true,
+            error = null
         )
     }
 

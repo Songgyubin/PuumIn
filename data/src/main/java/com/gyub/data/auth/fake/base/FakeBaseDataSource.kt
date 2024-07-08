@@ -1,6 +1,5 @@
 package com.gyub.data.auth.fake.base
 
-import com.gyub.network.model.AuthResponse
 import com.gyub.network.model.base.BaseResponse
 
 /**
@@ -12,12 +11,12 @@ import com.gyub.network.model.base.BaseResponse
 object FakeBaseDataSource {
 
     val successResponse = BaseResponse(
-        code = 200,
-        message = "success"
+        success = true,
+        error = null
     )
 
     val errorResponse = BaseResponse(
-        code = 500,
-        message = "error"
+        success = false,
+        error = "error"
     )
 }

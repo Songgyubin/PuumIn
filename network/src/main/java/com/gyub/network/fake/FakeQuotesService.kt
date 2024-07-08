@@ -16,8 +16,8 @@ class FakeQuotesService : QuotesService {
         quoteRequest: QuoteRequest,
     ): BaseResponse {
         return BaseResponse(
-            code = 200,
-            message = "success",
+            success = true,
+            error = null,
         )
     }
 }
