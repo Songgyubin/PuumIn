@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gyub.common.Result
 import com.gyub.common.asResult
-import com.gyub.common.const.UserPrefKey.TOKEN
-import com.gyub.data.datastore.UserPreferencesRepository
+import com.gyun.datastore.const.UserPrefKey.TOKEN
+import com.gyun.datastore.UserPreferencesRepository
 import com.gyub.domain.auth.usecase.PostLoginUseCase
 import com.gyub.domain.constant.enums.SocialLoginType
 import com.gyub.puumin.auth.model.LoginUiState
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel
 @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: com.gyun.datastore.UserPreferencesRepository,
     private val loginUseCase: PostLoginUseCase,
 ) : ViewModel() {
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.gyub.network"
+    namespace = "com.gyub.datastore"
     compileSdk = 34
 
     defaultConfig {
@@ -32,11 +32,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":datastore"))
-    
-    implementation(libs.retrofit.core)
-    implementation(libs.okhttp.logging)
-    implementation(libs.retrofit.convertor.gson)
+
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.hilt.android)
 
     kapt(libs.hilt.compiler)

@@ -1,7 +1,7 @@
-package com.gyub.data.di
+package com.gyun.datastore.di
 
 import android.content.Context
-import com.gyub.data.datastore.UserPreferencesRepository
+import com.gyun.datastore.UserPreferencesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

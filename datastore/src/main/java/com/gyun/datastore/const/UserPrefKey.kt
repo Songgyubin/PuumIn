@@ -1,4 +1,4 @@
-package com.gyub.common.const
+package com.gyun.datastore.const
 
 /**
  * 사용자 데이터 관리 Key

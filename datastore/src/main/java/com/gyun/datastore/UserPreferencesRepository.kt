@@ -1,4 +1,4 @@
-package com.gyub.data.datastore
+package com.gyun.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -12,8 +12,8 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.gyub.common.const.UserPrefKey.TOKEN
-import com.gyub.data.datastore.UserPreferencesRepository.Companion.PREF_USER_INFO
+import com.gyun.datastore.UserPreferencesRepository.Companion.PREF_USER_INFO
+import com.gyun.datastore.const.UserPrefKey.TOKEN
 import kotlinx.coroutines.flow.map
 
 /**

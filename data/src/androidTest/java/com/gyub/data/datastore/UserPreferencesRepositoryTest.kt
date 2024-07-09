@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.test.core.app.ApplicationProvider
-import com.gyub.common.const.UserPrefKey.TOKEN
-import kotlinx.coroutines.delay
+import com.gyun.datastore.const.UserPrefKey.TOKEN
+import com.gyun.datastore.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -26,7 +26,7 @@ class UserPreferencesRepositoryTest {
     val tempFolder = TemporaryFolder()
 
     private lateinit var context: Context
-    private lateinit var userPreferencesRepository: UserPreferencesRepository
+    private lateinit var userPreferencesRepository: com.gyun.datastore.UserPreferencesRepository
 
     @Before
     fun setUp() {
@@ -36,7 +36,7 @@ class UserPreferencesRepositoryTest {
                 return tempFolder.root
             }
         }
-        userPreferencesRepository = UserPreferencesRepository(testContext)
+        userPreferencesRepository = com.gyun.datastore.UserPreferencesRepository(testContext)
     }
 
     @Test
