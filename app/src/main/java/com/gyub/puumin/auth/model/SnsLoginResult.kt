@@ -7,6 +7,6 @@ package com.gyub.puumin.auth.model
  * @created  2024/07/01
  */
 sealed interface SnsLoginResult {
-    data class Success(val token: String) : SnsLoginResult
+    data class Success(val token: String, val type: String) : SnsLoginResult
     data object Error : SnsLoginResult
 }

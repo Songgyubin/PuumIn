@@ -17,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +27,6 @@ import androidx.navigation.compose.composable
 import com.gyub.design.component.textfield.RoundedInputTextField
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.LoginViewModel
-import com.gyub.puumin.auth.model.LoginUiState
 
 /**
  * 이메일 로그인 화면

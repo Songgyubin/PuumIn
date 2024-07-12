@@ -5,20 +5,21 @@ import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.gyub.common.util.ToastUtil.showToast
-import com.gyub.domain.constant.enums.SocialLoginType
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.LoginViewModel
 import com.gyub.puumin.auth.SignUpActivity
-import com.gyub.puumin.auth.model.LoginUiState
+import com.gyub.puumin.auth.model.LoginResult
 import com.gyub.puumin.auth.model.SnsLoginResult
 import com.gyub.puumin.auth.ui.EMAIL_LOGIN_ROUTE
 import com.gyub.puumin.auth.ui.LOGIN_HOME_ROUTE
@@ -43,7 +44,7 @@ fun LoginNavHost(
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
     val composableCoroutineScope = rememberCoroutineScope()
 
     NavHost(
@@ -54,18 +55,14 @@ fun LoginNavHost(
         loginHomeScreen(
             onKakaoLogin = {
                 composableCoroutineScope.launch {
-                    when (val result = socialLoginManager.handleKakaoLogin()) {
-                        SnsLoginResult.Error -> showToast(context, R.string.login_error, isLong = true)
-                        is SnsLoginResult.Success -> loginViewModel.login(result.token, SocialLoginType.KAKAO)
-                    }
+                    val kakaoLoginResult = socialLoginManager.handleKakaoLogin()
+                    loginViewModel.updateSnsLoginResult(kakaoLoginResult)
                 }
             },
             onNaverLogin = {
                 composableCoroutineScope.launch {
-                    when (val result = socialLoginManager.handleNaverLogin()) {
-                        SnsLoginResult.Error -> showToast(context, R.string.login_error, isLong = true)
-                        is SnsLoginResult.Success -> loginViewModel.login(result.token, SocialLoginType.NAVER)
-                    }
+                    val naverLoginResult = socialLoginManager.handleNaverLogin()
+                    loginViewModel.updateSnsLoginResult(naverLoginResult)
                 }
             },
             onEmailLogin = { navController.navigate(EMAIL_LOGIN_ROUTE) },
@@ -74,14 +71,33 @@ fun LoginNavHost(
         emailLoginScreen(loginViewModel = loginViewModel)
     }
 
-    LaunchedEffect(key1 = loginUiState) {
-        when (val uiState = loginUiState) {
-            LoginUiState.Error -> showToast(context, R.string.login_error, isLong = true)
-            LoginUiState.Loading -> {}
-            is LoginUiState.Success -> {
-                showToast(context, R.string.login_success)
-                loginViewModel.saveToken(uiState.token)
-                showHomeActivity(context)
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.lifecycleScope.launch {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.snsLoginResult.collect { result ->
+                    when (result) {
+                        SnsLoginResult.Error -> showToast(context, R.string.login_error, isLong = true)
+                        is SnsLoginResult.Success -> loginViewModel.login(result.token, result.type)
+                    }
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.lifecycleScope.launch {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.loginResult.collect { result ->
+                    when (result) {
+                        LoginResult.Error -> showToast(context, R.string.login_error, isLong = true)
+                        LoginResult.Loading -> {}
+                        is LoginResult.Success -> {
+                            showToast(context, R.string.login_success)
+                            loginViewModel.saveToken(result.token)
+                            showHomeActivity(context)
+                        }
+                    }
+                }
             }
         }
     }

@@ -2,8 +2,9 @@ package com.gyub.puumin.util.auth
 
 import android.content.Context
 import android.util.Log
-import com.gyub.puumin.auth.model.LoginUiState
+import com.gyub.puumin.auth.model.LoginResult
 import com.gyub.puumin.auth.model.SnsLoginResult
+import com.gyub.puumin.constant.enums.SnsLoginType
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -31,7 +32,7 @@ class SocialLoginManager
     /**
      * 카카오 로그인 처리
      *
-     * @return [LoginUiState]
+     * @return [LoginResult]
      */
     suspend fun handleKakaoLogin(): SnsLoginResult =
         suspendCoroutine { continuation ->
@@ -43,7 +44,7 @@ class SocialLoginManager
                     continuation.resume(SnsLoginResult.Error)
                 } else if (token != null) {
                     Log.d("TAG", "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    continuation.resume(SnsLoginResult.Success(token.accessToken))
+                    continuation.resume(SnsLoginResult.Success(token.accessToken, SnsLoginType.KAKAO.type))
                 }
             }
 
@@ -62,7 +63,7 @@ class SocialLoginManager
                         instance.loginWithKakaoAccount(context, callback = callback)
                     } else if (token != null) {
                         Log.i("TAG", "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        continuation.resume(SnsLoginResult.Success(token.accessToken))
+                        continuation.resume(SnsLoginResult.Success(token.accessToken, SnsLoginType.KAKAO.type))
                     }
                 }
             } else {
@@ -79,8 +80,7 @@ class SocialLoginManager
         suspendCoroutine { continuation ->
             val oauthLoginCallback: OAuthLoginCallback = object : OAuthLoginCallback {
                 override fun onSuccess() {
-                    Log.d("TAG", " -naver : ${getAccessToken()}")
-                    continuation.resume(SnsLoginResult.Success(getAccessToken().orEmpty()))
+                    continuation.resume(SnsLoginResult.Success(getAccessToken().orEmpty(), SnsLoginType.NAVER.type))
                 }
 
                 override fun onFailure(httpStatus: Int, message: String) {
